@@ -10,7 +10,7 @@ import java.util.List;
 public record BookData(
         @JsonAlias("title") String title,
         @JsonAlias("authors") List<AuthorData> author,
-        @JsonAlias("languages") List<Language> language,
+        @JsonAlias("languages") List<String> language,
         @JsonAlias("download_count") int downloads,
         @JsonAlias("copyright") boolean copyright
 ) {

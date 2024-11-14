@@ -26,7 +26,7 @@ public class Book {
 
     public Book(BookData bookData) {
         this.title = bookData.title();
-        this.language = bookData.language().getFirst();
+        this.language = Language.getLanguage(bookData.language().getFirst());
         this.downloads = bookData.downloads();
         this.copyright = bookData.copyright();
     }

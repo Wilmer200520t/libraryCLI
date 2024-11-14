@@ -15,7 +15,6 @@ public enum Language {
         this.nomenclature = nomenclature;
     }
 
-    @JsonValue
     public String getNomenclature() {
         return nomenclature;
     }

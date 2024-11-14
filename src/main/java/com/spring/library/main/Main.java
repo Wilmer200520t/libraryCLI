@@ -1,6 +1,8 @@
 package com.spring.library.main;
 
+import com.spring.library.model.Author;
 import com.spring.library.model.Book;
+import com.spring.library.model.Language;
 import com.spring.library.modelData.BookData;
 import com.spring.library.modelData.ResponseData;
 import com.spring.library.repository.BookRepository;
@@ -56,15 +58,66 @@ public class Main {
     }
 
     private void ShowBooksByLanguage() {
+        String message = """
+                Opciones disponibls('**'):
+                en - Ingles
+                es - Español
+                pt - Portugues
+                de - Aleman
+                fr - Frances
+                it - Italiano
+                """;
+        System.out.println(message);
+        String language = scanner.nextLine();
+
+        List<Book> books = bookRepository.findByLanguage(Language.getLanguage(language));
+
+        System.out.println("Lista de libros en el idioma " + Language.getLanguage(language) + ":");
+        books.forEach(System.out::println);
     }
 
     private void showAuthorsInRangeAge() {
+        int option;
+        try {
+            System.out.println("Introduzca el año:");
+            option = scanner.nextInt();
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Entrada no esperada, Error: " + e.getMessage());
+            return;
+        }
+
+        List<Author> authors = bookRepository.findAuthorBydeathYearLessThan(option);
+
+        if (authors.isEmpty()) {
+            System.out.println("Ningun autor vivo en dicho año.");
+            return;
+        }
+        System.out.println("Lista de actores vivos en el año " + option + ":");
+        authors.forEach(System.out::println);
+
     }
 
     private void showAllAuthors() {
+        try {
+            List<Author> authors = bookRepository.findAuthors();
+            authors.forEach(System.out::println);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     private void showAllBooks() {
+        try {
+            List<Book> books = bookRepository.findAll();
+            System.out.println("List of books:");
+            books.forEach(
+                    book -> System.out.println(book.toString())
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void searchAndSaveBooks() {
@@ -116,6 +169,8 @@ public class Main {
     private int showMenu(){
        int option = 0;
        String message = """
+               
+               Opciones: 
                1.- Buscar y guardar libro por titulo
                2.- Listar libros registrados
                3.- Listar Autores registrados
