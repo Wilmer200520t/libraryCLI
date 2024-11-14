@@ -10,6 +10,8 @@ public class HttpClientApi {
     HttpClient client = HttpClient.newHttpClient();
     HttpResponse<String> response;
 
+    public HttpClientApi() {}
+
     public String getData(String url) {
         try {
             request = HttpRequest.newBuilder()
